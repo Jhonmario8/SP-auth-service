@@ -1,6 +1,7 @@
 package com.sp.authservice.infrastructure.exception;
 
 
+import com.sp.authservice.domain.exception.ConflictException;
 import com.sp.authservice.domain.exception.DomainException;
 import com.sp.authservice.infrastructure.constants.InfrastructureConstants;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleBadRequestException(DomainException ex) {
         return ResponseEntity.badRequest()
                 .body(new ErrorResponse(ex.getMessage(), 400));
+    }
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<ErrorResponse> handleConflictException(ConflictException ex) {
+        return ResponseEntity.status(409)
+                .body(new ErrorResponse(ex.getMessage(), 409));
     }
 
     @ExceptionHandler(InfrastructureException.class)

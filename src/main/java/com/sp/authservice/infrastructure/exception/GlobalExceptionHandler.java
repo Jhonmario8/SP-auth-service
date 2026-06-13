@@ -3,6 +3,8 @@ package com.sp.authservice.infrastructure.exception;
 
 import com.sp.authservice.domain.exception.ConflictException;
 import com.sp.authservice.domain.exception.DomainException;
+import com.sp.authservice.domain.exception.InvalidCredentialsException;
+import com.sp.authservice.domain.exception.NotFoundException;
 import com.sp.authservice.infrastructure.constants.InfrastructureConstants;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -30,6 +32,16 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleInfrastructureException(InfrastructureException ex) {
         return ResponseEntity.status(ex.getHttpStatus())
                 .body(new ErrorResponse(ex.getMessage(), ex.getHttpStatus()));
+    }
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFoundException(NotFoundException ex) {
+        return ResponseEntity.status(404)
+                .body(new ErrorResponse(ex.getMessage(), 404));
+    }
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidCredentialsException(InvalidCredentialsException ex) {
+        return ResponseEntity.status(401)
+                .body(new ErrorResponse(ex.getMessage(), 401));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

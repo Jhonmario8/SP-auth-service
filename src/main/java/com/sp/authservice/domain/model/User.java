@@ -34,7 +34,7 @@ public class User {
         if (!this.phoneNumber.matches(CELLPHONE_PATTERN)){
             throw new DomainException(DomainConstants.INVALID_CELLPHONE_NUMBER);
         }
-        if (this.identificationNumber.matches(DOCUMENT_PATTERN)){
+        if (!this.identificationNumber.matches(DOCUMENT_PATTERN)){
             throw new DomainException(DomainConstants.INVALID_IDENTIFICATION_NUMBER);
         }
     }

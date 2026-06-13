@@ -4,12 +4,14 @@ import com.sp.authservice.infrastructure.output.jpa.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface IUserRepository extends JpaRepository<UserEntity, Long> {
 
-    Boolean findByEmail(String email);
+    Optional<UserEntity> findByEmail(String email);
 
-    Boolean findByPhoneNumber(String cellphone);
+    Boolean existsByPhoneNumber(String cellphone);
 
-    Boolean findByIdentificationNumber(String identificationNumber);
+    Boolean existsByIdentificationNumber(String identificationNumber);
 }

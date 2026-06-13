@@ -35,13 +35,14 @@ public class UserUseCase implements IUserServicePort {
     }
 
     private void validateUniqueness(User user) {
-        if (!userPersistencePort.findByEmail(user.getEmail())) {
+        userPersistencePort.findByEmail(user.getEmail()).ifPresent(u -> {
             throw new ConflictException(DomainConstants.MSG_EMAIL_ALREADY_EXISTS);
-        }
-        if (!userPersistencePort.findByPhoneNumber(user.getPhoneNumber())) {
+        });
+
+        if (userPersistencePort.findByPhoneNumber(user.getPhoneNumber())) {
             throw new ConflictException(DomainConstants.MSG_PHONE_NUMBER_ALREADY_EXISTS);
         }
-        if (!userPersistencePort.findByIdentificationNumber(user.getIdentificationNumber())) {
+        if (userPersistencePort.findByIdentificationNumber(user.getIdentificationNumber())) {
             throw new ConflictException(DomainConstants.MSG_IDENTIFICATION_NUMBER_ALREADY_EXISTS);
         }
     }
